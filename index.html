@@ -8,9 +8,12 @@
 
     <link href="css/style.css" rel="stylesheet"/>
     <link href="css/foundation4.css" rel="stylesheet"/>
-
+    
     <script type='text/javascript' src='js/Tone.js'></script>
-    <script type='text/javascript' src='js/chordix.js'></script>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.core.min.js'></script>
+   <!-- <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/tone/13.3.21/Tone.js'></script>
+   --><script type='text/javascript' src='js/chordix.js'></script>
+      <script type='text/javascript' src='js/accompaniment.js'></script>
     <script type='text/javascript' src='js/jquery-3.1.0.min.js'></script>
     <title>Chordix</title>
   </head>
@@ -40,7 +43,7 @@
 
   <div class="row">
     <div class="small-offset-1 small-10 large-offset-4 large-5 columns">
-      <ul class="large-block-grid-2">
+      <ul class="large-block-grid-4">
         <li>
         <div id="playChord" class="circle">
           Tocar 1
@@ -51,8 +54,19 @@
         <div id="nextChord" class="circle">
           Tocar 2
           <div class="show-for-large-up small-text">( Z )</div>
-        <div>
         </div>
+        </li>
+        <li>
+          <div id="drum" class="circle">
+            Tocar bateria
+            <div class="show-for-large-up small-text">( D )</div>
+          </div>
+        </li>
+        <li>
+          <div id="turn" class="circle">
+            virada
+            <div class="show-for-large-up small-text">( T )</div>
+          </div>
         </li>
       </ul>
     </div>
@@ -136,6 +150,15 @@
           showChord(n);
           hideChord(n-1);
         }
+      });
+
+      $("#drum").on('click', function(){
+        drum();
+        
+      });
+      $("#turn").on('click', function(){
+        turns();
+        
       });
 
       $("#backChord").on('click', function(){
@@ -258,6 +281,16 @@
           showChord(n);
         }
       }
+
+      // key d
+      if(e.keyCode == '68') {
+        drum();
+      } 
+      // key t
+      if(e.keyCode == '84') {
+        turns();
+      } 
+      
     });
     </script>
   </body>
