@@ -4,7 +4,6 @@ var d4 = new Tone.Sampler("notes/acoustic/D.wav").toMaster();
 var g3 = new Tone.Sampler("notes/acoustic/G.wav").toMaster();
 var b2 = new Tone.Sampler("notes/acoustic/B.wav").toMaster();
 var e1 = new Tone.Sampler("notes/acoustic/E8.wav").toMaster();
-var player = new Tone.Player("https://cdn.jsdelivr.net/gh/Tonejs/Tone.js/examples/audio/505/kick.mp3").toMaster();
 
 
 

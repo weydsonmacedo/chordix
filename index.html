@@ -30,7 +30,7 @@
       </div>
     </div>
   </div>
-
+  
   <div class="row">
     <div class="large-12 columns">
       <div class="row margin-bottom-20 margin-top-20 no-margin">
@@ -39,7 +39,6 @@
         </div>
       </div>
     </div>
-  </div>
 
   <div class="row">
     <div class="small-offset-1 small-10 large-offset-4 large-5 columns">
@@ -58,7 +57,7 @@
         </li>
         <li>
           <div id="drum" class="circle">
-            Tocar bateria
+           <span id="play_pause">tocar bateria</span> 
             <div class="show-for-large-up small-text">( D )</div>
           </div>
         </li>
@@ -68,6 +67,12 @@
             <div class="show-for-large-up small-text">( T )</div>
           </div>
         </li>
+        <div id="select_drum"  class="small-offset-1 small-10 large-offset-4 large-5 columns"> 
+          <select name="type" id="type_drum" >
+            <option value=0>Rock3</option>
+            <option value=1>Rock4</option>
+          </select>
+      </div>
       </ul>
     </div>
   </div>
@@ -84,12 +89,17 @@
     </div>
   </div>
 
-    <script>
+    <script>      
       var html = '';
       var parsedChords = '';
       var chords = []
       var container;
       var n = 0;
+      var play_pause = true;
+
+      $(document).ready(function(){
+        $('#select_drum').hide();
+      });
 
       var showChord = function(id) {
         container = $(".cipher");
@@ -153,12 +163,23 @@
       });
 
       $("#drum").on('click', function(){
-        drum();
+        playDrum();
+        toControlSpan();
         
       });
+    function toControlSpan(){
+        if(play_pause){
+          $("#play_pause").html('parar bateria')
+          play_pause = false;
+        } else{
+          $("#play_pause").html('tocar bateria')
+          play_pause = true;
+        }
+  }
+
+
       $("#turn").on('click', function(){
         turns();
-        
       });
 
       $("#backChord").on('click', function(){
@@ -198,6 +219,7 @@
         $(".back-chord").show();
         $(".circle").show();
         $(".content-url").hide();
+        $('#select_drum').show();
 
         $('html,body').animate({
           scrollTop:$('.cipher').offset().top
@@ -284,7 +306,8 @@
 
       // key d
       if(e.keyCode == '68') {
-        drum();
+        playDrum();
+        toControlSpan();
       } 
       // key t
       if(e.keyCode == '84') {
