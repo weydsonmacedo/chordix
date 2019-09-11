@@ -1,7 +1,6 @@
 var kick = new Tone.Player("https://cdn.jsdelivr.net/gh/Tonejs/Tone.js/examples/audio/505/kick.mp3").toMaster();
 var snare = new Tone.Player("https://cdn.jsdelivr.net/gh/Tonejs/Tone.js/examples/audio/505/snare.mp3").toMaster();
 var hh = new Tone.Player("https://cdn.jsdelivr.net/gh/Tonejs/Tone.js/examples/audio/505/hh.mp3").toMaster();
- var kick2  =new Tone.Sampler("https://cdn.jsdelivr.net/gh/Tonejs/Tone.js/examples/audio/505/kick.mp3").toMaster();
 var drums;
 var stop = true;
 
@@ -63,30 +62,22 @@ var drum2 = new Howl({
     //   //console.log('loaded')
     // });
      kick.connect(soundFix.volume);
-    //  kick.start();
-     var loop = new Tone.Loop(function(time){
-      // kick2.triggerAttackRelease( "8n", time);
-    }, "4n");
-    kick2.triggerAttack( 1,"+0", 1);
-    //  snare.connect(soundFix.volume);
-    //  snare.start();
-    
-    //  hh.connect(soundFix.volume);
-    //  hh.start();
-     loop.start("1m").stop("4m");
-
-  //  var typeDrum =  $('#type_drum').val();
-   
-  //  switch (typeDrum) {
-  //   case '0': 
-  //     drums  = drum;
-  //     break;
-  //   case '1':
-  //     drums =  drum2;
-  //     break;
-  // }
-  // toControl(drums);
- 
+     hh.connect(soundFix.volume);
+     snare.connect(soundFix.volume);
+     Tone.context.latency = 'fastest';  
+     Tone.Transport.bpm.value = 120;
+    //  Tone.Sequence.defaults = "8n";
+     var seq = new Tone.Sequence(function(time,idx){
+       hh.start();    
+       if([0,4,8,12].indexOf(idx) >=0)
+          kick.start();
+        if([2,6,10,14].indexOf(idx) >=0)
+           snare.start();
+       console.log(idx);
+       console.log(time);
+     },[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"8n");
+     Tone.Transport.start('+0.2');
+     seq.start();
   }
   
 function toControl(drums) {
