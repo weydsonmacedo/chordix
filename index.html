@@ -69,9 +69,18 @@
         </li>
         <div id="select_drum"  class="small-offset-1 small-10 large-offset-4 large-5 columns"> 
           <select name="type" id="type_drum" >
-            <option value=0>Rock3</option>
-            <option value=1>Rock4</option>
+            <option value='2n'>2</option>
+            <option value='4n'>4</option>
+            <option value='6n'>8</option>
+            <option value='8n'>8</option>
+            <option value='16n'>16</option>
+            <option value='32n'>32</option>
+            <option value='64n'>64</option>
+            <option value='128n'>128</option>
           </select>
+      </div>
+      <div class="small-3 columns">
+        <input id="bpm" class="chord-input-text" type="text" placeholder="BPM">
       </div>
       </ul>
     </div>
@@ -99,6 +108,8 @@
 
       $(document).ready(function(){
         $('#select_drum').hide();
+         $('#bpm').hide();
+        
       });
 
       var showChord = function(id) {
@@ -220,6 +231,7 @@
         $(".circle").show();
         $(".content-url").hide();
         $('#select_drum').show();
+        $('#bpm').show();
 
         $('html,body').animate({
           scrollTop:$('.cipher').offset().top

@@ -15,9 +15,18 @@ stop = true;
     //  kick.connect(soundFix.volume);
      //hh.connect(soundFix.volume);
     //  snare.connect(soundFix.volume);
+
+     var notes = $('#select_drum option:selected').val();
+     var bpm;
+     if($('#bpm').val()){
+       bpm = $('#bpm').val();
+     } else{
+       bpm = 100;
+     }
+
      Tone.context.latencyHint = 'fastest';  
-     Tone.Transport.bpm.value = 100;
-    //  Tone.Sequence.defaults = "8n";
+     Tone.Transport.bpm.value = bpm;
+    
      var seq = new Tone.Sequence(function(time,idx){
         hh.start();    
         if([0,4,7,8,12].indexOf(idx) >=0)
@@ -29,7 +38,7 @@ stop = true;
       //  console.log(idx);
       //  console.log(time);
       event.humanize = true;
-     },[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"6n");
+     },[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],notes);
      Tone.Transport.start('+0.2');
      seq.start();
   }
