@@ -35,8 +35,6 @@ stop = true;
            snare.start();
          if([5,13].indexOf(idx) >=0) 
             openHH.start();   
-      //  console.log(idx);
-      //  console.log(time);
       event.humanize = true;
      },[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],notes);
      Tone.Transport.start('+0.2');
