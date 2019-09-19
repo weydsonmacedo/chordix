@@ -1,5 +1,5 @@
 var kick = new Tone.Player("https://cdn.jsdelivr.net/gh/Tonejs/Tone.js/examples/audio/505/kick.mp3").toMaster();
-var snare = new Tone.Player("https://cdn.jsdelivr.net/gh/Tonejs/Tone.js/examples/audio/505/snare.mp3").toMaster();
+var snare = new Tone.Player("notes/Korg-TR-Rack-Standard-Kit-Side-Stick.wav").toMaster();
 var hh = new Tone.Player("notes/Closed-Hi-Hat-1.wav").toMaster(); 
 var openHH = new Tone.Player("notes/hihat_004b.wav").toMaster();
 var splash = new Tone.Player("notes/Kawai-K11-Bob-Splash-Cymbal.wav").toMaster();
@@ -8,17 +8,19 @@ stop = true;
 var seq ;
 var seq2 ;
 var turn = false;
+var notes;
 
 function structTurn(){
+    var noteTurn =   Math.floor(notes.split("n")[0]) * 2;
       seq2 = new Tone.Sequence(function(time,idx){   
-              if([0,1].indexOf(idx) >=0){
-                   snare.start();
-              }
-        },[0,1],"16n");
+     //   hh.start()
+        snare.start();
+        console.log('ta')
+        },[0,1],noteTurn+'n');
 }
 
 
-function structDrum(notes){
+function structDrum(){
   Tone.context.latencyHint = 'fastest'; 
   Tone.Transport.start('+0.2');
   seq = new Tone.Sequence(function(time,idx){
@@ -31,7 +33,9 @@ function structDrum(notes){
             openHH.start();   
       event.humanize = true;
       if(turn){
-         seq2.start();
+        if([14].indexOf(idx) >=0){
+          seq2.start();
+        } 
         if([0].indexOf(idx) >=0){
             splash.start();
             seq2.stop();
@@ -58,7 +62,7 @@ function structDrum(notes){
     //  kick.connect(soundFix.volume);
      //hh.connect(soundFix.volume);
     //  snare.connect(soundFix.volume);
-     var notes = $('#select_drum option:selected').val();
+      notes = $('#select_drum option:selected').val();
      var bpm;
      if($('#bpm').val()){
        bpm = $('#bpm').val();
@@ -70,18 +74,18 @@ function structDrum(notes){
       
    
     
-     toControl(notes);
+     toControl();
 
     
   }
   
-function toControl(notes) {
+function toControl() {
   if (!stop) {
       stop = true;
       seq.stop();
     }else{
       stop = false;
-      structDrum(notes);
+      structDrum();
       seq.start();
     }
 }
