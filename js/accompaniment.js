@@ -21,23 +21,17 @@ function structTurn(){
         //hh.start()
         
 
-        if([0].indexOf(idx) >=0) {
+        if([0,3].indexOf(idx) >=0) {
             floorTom.start();
         }else {
           snareTurn.stop();
         }
-        if([1].indexOf(idx) >=0){
+        if([1,2].indexOf(idx) >=0){
             snareTurn.start();
         } 
           
-         if([2].indexOf(idx) >=0) {
-            snareTurn.start();
-         }
-          
-        if([3].indexOf(idx) >=0)
-           floorTom.start();
-        //    lowTom.start();
-        console.log('ta')
+               //    lowTom.start();
+       // console.log('ta')
          
         },[0,1,2,3],noteTurn+'n');
 }
@@ -54,7 +48,7 @@ function structDrum(){
            snareTurn.start();
         if([5,13].indexOf(idx) >=0) 
             openHH.start();   
-      event.humanize = true;
+     // event.humanize = true;
       if(turn){
         if([14,15].indexOf(idx) >=0){
           seq2.start();
