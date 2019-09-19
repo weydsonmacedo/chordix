@@ -3,6 +3,11 @@ var snare = new Tone.Player("notes/Korg-TR-Rack-Standard-Kit-Side-Stick.wav").to
 var hh = new Tone.Player("notes/Closed-Hi-Hat-1.wav").toMaster(); 
 var openHH = new Tone.Player("notes/hihat_004b.wav").toMaster();
 var splash = new Tone.Player("notes/Kawai-K11-Bob-Splash-Cymbal.wav").toMaster();
+var floorTom = new Tone.Player("notes/Floor-Tom-1.wav").toMaster();
+var snareTurn = new Tone.Player("notes/Korg-TR-Rack-Standard-Kit-Snare-Drum.wav").toMaster();
+var hiTom = new Tone.Player("notes/Hi-Tom-1.wav").toMaster();
+var lowTom = new Tone.Player("notes/Low-Tom-1.wav").toMaster();
+
 
 stop = true;
 var seq ;
@@ -13,10 +18,28 @@ var notes;
 function structTurn(){
     var noteTurn =   Math.floor(notes.split("n")[0]) * 2;
       seq2 = new Tone.Sequence(function(time,idx){   
-     //   hh.start()
-        snare.start();
+        //hh.start()
+        
+
+        if([0].indexOf(idx) >=0) {
+            floorTom.start();
+        }else {
+          snareTurn.stop();
+        }
+        if([1].indexOf(idx) >=0){
+            snareTurn.start();
+        } 
+          
+         if([2].indexOf(idx) >=0) {
+            snareTurn.start();
+         }
+          
+        if([3].indexOf(idx) >=0)
+           floorTom.start();
+        //    lowTom.start();
         console.log('ta')
-        },[0,1],noteTurn+'n');
+         
+        },[0,1,2,3],noteTurn+'n');
 }
 
 
@@ -28,12 +51,12 @@ function structDrum(){
         if([0,4,7,8,12].indexOf(idx) >=0)
            kick.start();
         if([2,6,10,14].indexOf(idx) >=0)
-           snare.start();
+           snareTurn.start();
         if([5,13].indexOf(idx) >=0) 
             openHH.start();   
       event.humanize = true;
       if(turn){
-        if([14].indexOf(idx) >=0){
+        if([14,15].indexOf(idx) >=0){
           seq2.start();
         } 
         if([0].indexOf(idx) >=0){
