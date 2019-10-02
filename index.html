@@ -79,8 +79,15 @@
           </select>
       </div>
       <div class="small-3 columns">
-        <input id="bpm" class="chord-input-text" type="text" placeholder="BPM">
+        <input  class="chord-input-text" type="text" required="required" name="numbers" pattern="[0-9]+$" placeholder="BPM">
       </div>
+      <div class="input-group">
+       <input type="button" value="-" class="button-minus" data-field="quantity">
+       <input id="bpm" type="number" step="1" max="" value="100" name="quantity" class="quantity-field">
+       <input type="button" value="+" class="button-plus" data-field="quantity">
+      </div>
+
+
       </ul>
     </div>
   </div>
@@ -192,6 +199,10 @@
         turns();
       });
 
+      $("#bpm").on('change',function(){
+        bpm();
+      });
+
       $("#backChord").on('click', function(){
         if(n > 0) {
           n--;
@@ -214,6 +225,48 @@
     $("#getChordUrl").click(function(){
       requestHtml($("#urlInput").val());
     });
+
+    function incrementValue(e) {
+      e.preventDefault();
+      var fieldName = $(e.target).data('field');
+      var parent = $(e.target).closest('div');
+      var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
+
+      if (!isNaN(currentVal)) {
+        parent.find('input[name=' + fieldName + ']').val(currentVal + 1);
+         $("#bpm").val(currentVal + 1);
+      } else {
+        parent.find('input[name=' + fieldName + ']').val(0);
+      }
+  }
+
+  function decrementValue(e) {
+    e.preventDefault();
+    var fieldName = $(e.target).data('field');
+    var parent = $(e.target).closest('div');
+    var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
+
+    if (!isNaN(currentVal) && currentVal > 0) {
+      parent.find('input[name=' + fieldName + ']').val(currentVal - 1);
+      $("#bpm").val(currentVal - 1);
+    } else {
+      parent.find('input[name=' + fieldName + ']').val(0);
+    }
+  }
+
+  $('.input-group').on('click', '.button-plus', function(e) {
+    incrementValue(e);
+  });
+
+  $('.input-group').on('click', '.button-minus', function(e) {
+    decrementValue(e);
+  });
+
+
+
+
+
+
 
     var requestApi = "https://chordcipher-api.herokuapp.com/generate_html";
 

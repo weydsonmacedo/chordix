@@ -29,9 +29,6 @@ function structTurn(){
         if([1,2].indexOf(idx) >=0){
             snareTurn.start();
         } 
-          
-               //    lowTom.start();
-       // console.log('ta')
          
         },[0,1,2,3],noteTurn+'n');
 }
@@ -80,13 +77,7 @@ function structDrum(){
      //hh.connect(soundFix.volume);
     //  snare.connect(soundFix.volume);
       notes = $('#select_drum option:selected').val();
-     var bpm;
-     if($('#bpm').val()){
-       bpm = $('#bpm').val();
-     } else{
-       bpm = 100;
-     }
-     Tone.Transport.bpm.value = bpm;
+     
 
       
    
@@ -111,4 +102,14 @@ function toControl() {
  function turns(){
   turn = true;
    structTurn();
+ }
+
+ function bpm(){
+  var bpm = $('#bpm').val();
+     if(bpm && bpm >1 && bpm <1000){
+      Tone.Transport.bpm.value = bpm;
+     } else{
+       Tone.Transport.bpm.value = 100;
+     }
+     
  }
