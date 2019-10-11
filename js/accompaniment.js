@@ -45,7 +45,7 @@ function structDrum(){
            snareTurn.start();
         if([5,13].indexOf(idx) >=0) 
             openHH.start();   
-     // event.humanize = true;
+      event.humanize = true;
       if(turn){
         if([14,15].indexOf(idx) >=0){
           seq2.start();
