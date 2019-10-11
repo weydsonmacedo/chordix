@@ -47,10 +47,10 @@ function structDrum(){
             openHH.start();   
       event.humanize = true;
       if(turn){
-        if([14,15].indexOf(idx) >=0){
+        if([6,14].indexOf(idx) >=0){
           seq2.start();
         } 
-        if([0].indexOf(idx) >=0){
+        if([8,0].indexOf(idx) >=0){
             splash.start();
             seq2.stop();
             turn = false; 
