@@ -9,48 +9,57 @@ var hiTom = new Tone.Player("notes/Hi-Tom-1.wav").toMaster();
 var lowTom = new Tone.Player("notes/Low-Tom-1.wav").toMaster();
 
 
+
 stop = true;
 var seq ;
 var seq2 ;
 var turn = false;
-var notes;
+var drumJson;
+var currentDrum;
 
-function structTurn(){
-    var noteTurn =   Math.floor(notes.split("n")[0]) * 2;
+loadJSON(function(response) {
+  // Parse JSON string into object
+   drumJson = JSON.parse(response);
+ });
+
+
+
+function structTurn(styleDrum){
+    var noteTurn = 16;  //Math.floor(notes.split("n")[0]) * 2;
       seq2 = new Tone.Sequence(function(time,idx){   
         //hh.start()
         
 
-        if([0,3].indexOf(idx) >=0) {
+        if(styleDrum.floorTom.indexOf(idx) >=0) {
             floorTom.start();
         }else {
           snareTurn.stop();
         }
-        if([1,2].indexOf(idx) >=0){
+        if(styleDrum.snare.indexOf(idx) >=0){
             snareTurn.start();
         } 
          
-        },[0,1,2,3],noteTurn+'n');
+        },styleDrum.time,noteTurn+'n');
 }
 
-
-function structDrum(){
+function structDrum(styleDrum){
   Tone.context.latencyHint = 'fastest'; 
   Tone.Transport.start('+0.2');
   seq = new Tone.Sequence(function(time,idx){
-        hh.start();    
-        if([0,4,7,8,12].indexOf(idx) >=0)
+        if(styleDrum.closedHH.indexOf(idx) >=0)
+           hh.start();    
+        if(styleDrum.kick.indexOf(idx) >=0)
            kick.start();
-        if([2,6,10,14].indexOf(idx) >=0)
+        if(styleDrum.snare.indexOf(idx) >=0)
            snareTurn.start();
-        if([5,13].indexOf(idx) >=0) 
+        if(styleDrum.openHH.indexOf(idx) >=0) 
             openHH.start();   
       event.humanize = true;
       if(turn){
-        if([6,14].indexOf(idx) >=0){
+        if(styleDrum.turn.start.indexOf(idx) >=0){
           seq2.start();
         } 
-        if([8,0].indexOf(idx) >=0){
+        if(styleDrum.turn.stop.indexOf(idx) >=0){
             splash.start();
             seq2.stop();
             turn = false; 
@@ -58,7 +67,7 @@ function structDrum(){
                    
 
       } 
-     },[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],notes);
+     },styleDrum.time,'8n');
 }
 
 
@@ -76,32 +85,37 @@ function structDrum(){
     //  kick.connect(soundFix.volume);
      //hh.connect(soundFix.volume);
     //  snare.connect(soundFix.volume);
-      notes = $('#select_drum option:selected').val();
-     
-
-      
    
+      styleDrums = $('#select_drum option:selected').val();
+     
+    switch (styleDrums){
+     case 'rock':
+         currentDrum = drumJson.rock;
+        break;
+     case 'samba':
+          currentDrum = drumJson.samba;
+        break;
+     }
+     
     
-     toControl();
-
-    
-  }
-  
-function toControl() {
-  if (!stop) {
+    if (!stop) {
       stop = true;
       seq.stop();
     }else{
       stop = false;
-      structDrum();
+      bpm();
+      structDrum(currentDrum);
       seq.start();
     }
-}
+
+    
+  }
+
 
 
  function turns(){
   turn = true;
-   structTurn();
+   structTurn(currentDrum.turn);
  }
 
  function bpm(){
@@ -113,3 +127,21 @@ function toControl() {
      }
      
  }
+
+
+
+ function loadJSON(callback) {   
+
+    var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+    xobj.open('GET', '../notes/drumRhythm.json', true); // Replace 'my_data' with the path to your file
+    xobj.onreadystatechange = function () {
+          if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+          }
+    };
+    xobj.send(null);  
+ }
+
+ 
