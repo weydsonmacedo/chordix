@@ -5,12 +5,13 @@ var seq ;
 var seq2 ;
 var turn = false;
 var drumJson;
-var currentDrum;
+var currentDrum = 0;
 
 loadJSON(function(response) {
   // Parse JSON string into object
    drumJson = JSON.parse(response);
  });
+
 
 
 
@@ -87,8 +88,7 @@ function selectedDrum() {
      return currentDrum;
 }
 
-
-  function playDrum(){
+function playDrum(){
     // var p1 = new Tone.Players({
     //   "kick": 'https://cdn.jsdelivr.net/gh/Tonejs/Tone.js/examples/audio/505/kick.mp3',
     //   "snare": 'https://cdn.jsdelivr.net/gh/Tonejs/Tone.js/examples/audio/505/snare.mp3',
@@ -117,6 +117,7 @@ function selectedDrum() {
 
     
   }
+
 
 
 
