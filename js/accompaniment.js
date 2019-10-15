@@ -1,15 +1,5 @@
-var kick = new Tone.Player("https://cdn.jsdelivr.net/gh/Tonejs/Tone.js/examples/audio/505/kick.mp3").toMaster();
-var snare = new Tone.Player("notes/Korg-TR-Rack-Standard-Kit-Side-Stick.wav").toMaster();
-var hh = new Tone.Player("notes/Closed-Hi-Hat-1.wav").toMaster(); 
-var openHH = new Tone.Player("notes/hihat_004b.wav").toMaster();
-var splash = new Tone.Player("notes/Kawai-K11-Bob-Splash-Cymbal.wav").toMaster();
-var floorTom = new Tone.Player("notes/Floor-Tom-1.wav").toMaster();
-var snareTurn = new Tone.Player("notes/Korg-TR-Rack-Standard-Kit-Snare-Drum.wav").toMaster();
-var hiTom = new Tone.Player("notes/Hi-Tom-1.wav").toMaster();
-var lowTom = new Tone.Player("notes/Low-Tom-1.wav").toMaster();
 
-
-
+var soundDrum = new Drum();
 stop = true;
 var seq ;
 var seq2 ;
@@ -24,22 +14,27 @@ loadJSON(function(response) {
 
 
 
-function structTurn(styleDrum){
-    var noteTurn = 16;  //Math.floor(notes.split("n")[0]) * 2;
+/*function structTurn(styleDrum){
       seq2 = new Tone.Sequence(function(time,idx){   
         //hh.start()
         
 
         if(styleDrum.floorTom.indexOf(idx) >=0) {
-            floorTom.start();
+            soundDrum.floorTom.start();
         }else {
-          snareTurn.stop();
+          soundDrum.snare.stop();
         }
         if(styleDrum.snare.indexOf(idx) >=0){
-            snareTurn.start();
+            soundDrum.snare.start();
+        } 
+        if(styleDrum.lowTom.indexOf(idx) >=0){
+            soundDrum.lowTom.start();
+        } 
+        if(styleDrum.hiTom.indexOf(idx) >=0){
+            soundDrum.hiTom.start();
         } 
          
-        },styleDrum.time,noteTurn+'n');
+        },styleDrum.time,styleDrum.notes);
 }
 
 function structDrum(styleDrum){
@@ -47,31 +42,50 @@ function structDrum(styleDrum){
   Tone.Transport.start('+0.2');
   seq = new Tone.Sequence(function(time,idx){
         if(styleDrum.closedHH.indexOf(idx) >=0)
-           hh.start();    
+           soundDrum.hh.start();    
         if(styleDrum.kick.indexOf(idx) >=0)
-           kick.start();
+           soundDrum.kick.start();
         if(styleDrum.snare.indexOf(idx) >=0)
-           snareTurn.start();
+           soundDrum.snare.start();
+        if(styleDrum.snareRim.indexOf(idx) >=0)
+           soundDrum.snareRim.start(); 
         if(styleDrum.openHH.indexOf(idx) >=0) 
-            openHH.start();   
+            soundDrum.openHH.start();
+        if(styleDrum.splash.indexOf(idx) >=0) 
+            soundDrum.splash.start();          
       event.humanize = true;
       if(turn){
         if(styleDrum.turn.start.indexOf(idx) >=0){
           seq2.start();
         } 
         if(styleDrum.turn.stop.indexOf(idx) >=0){
-            splash.start();
+            soundDrum.splash.start();
             seq2.stop();
             turn = false; 
          }
-                   
-
-      } 
-     },styleDrum.time,'8n');
+      }
+       styleDrum = selectedDrum();    
+       
+     },styleDrum.time,styleDrum.notes);
 }
 
-
-
+*/
+function selectedDrum() {
+  loadJSON(function(response) {
+         drumJson = JSON.parse(response);
+      });
+   styleDrums = $('#select_drum option:selected').val();
+     
+    switch (styleDrums){
+     case 'rock':
+         currentDrum = drumJson.rock;
+        break;
+     case 'samba':
+          currentDrum = drumJson.samba;
+        break;
+     }
+     return currentDrum;
+}
 
 
   function playDrum(){
@@ -85,27 +99,20 @@ function structDrum(styleDrum){
     //  kick.connect(soundFix.volume);
      //hh.connect(soundFix.volume);
     //  snare.connect(soundFix.volume);
-   
-      styleDrums = $('#select_drum option:selected').val();
+      selectedDrum();
      
-    switch (styleDrums){
-     case 'rock':
-         currentDrum = drumJson.rock;
-        break;
-     case 'samba':
-          currentDrum = drumJson.samba;
-        break;
-     }
      
     
     if (!stop) {
       stop = true;
-      seq.stop();
+      //seq.stop();
+       soundDrum.stop(soundDrum);
     }else{
       stop = false;
       bpm();
-      structDrum(currentDrum);
-      seq.start();
+      //structDrum(currentDrum);
+      //seq.start();
+       soundDrum.play(currentDrum,this.soundDrum);
     }
 
     
@@ -114,8 +121,9 @@ function structDrum(styleDrum){
 
 
  function turns(){
-  turn = true;
-   structTurn(currentDrum.turn);
+   turn = true;
+   //structTurn(currentDrum.turn);
+   soundDrum.playTurn(currentDrum,this.soundDrum);
  }
 
  function bpm(){
