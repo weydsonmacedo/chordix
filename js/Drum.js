@@ -17,18 +17,30 @@ function Drum() {
 		Tone.context.latencyHint = 'fastest'; 
   		Tone.Transport.start('+0.2');
   		return  new Tone.Sequence(function(time,idx){
-	        if(styleDrum.closedHH.indexOf(idx) >=0)
-	           drum.hh.start();    
-	        if(styleDrum.kick.indexOf(idx) >=0)
-	           drum.kick.start();
-	        if(styleDrum.snare.indexOf(idx) >=0)
-	           drum.snare.start();
-	        if(styleDrum.snareRim.indexOf(idx) >=0)
-	           drum.snareRim.start(); 
-	        if(styleDrum.openHH.indexOf(idx) >=0) 
-	            drum.openHH.start();
-	        if(styleDrum.splash.indexOf(idx) >=0) 
-	            drum.splash.start();          
+	        if(styleDrum.closedHH.indexOf(idx) >=0){
+	        	drum.hh.stop();	
+	        	drum.hh.start();
+	        }
+	        if(styleDrum.kick.indexOf(idx) >=0){
+	        	drum.kick.stop();
+	       		drum.kick.start();
+	        }	
+	        if(styleDrum.snare.indexOf(idx) >=0){
+	        	drum.snare.stop();	
+	        	drum.snare.start();
+	        }	
+	        if(styleDrum.snareRim.indexOf(idx) >=0){
+	        	drum.snareRim.stop();
+	        	drum.snareRim.start(); 
+	        }	
+	        if(styleDrum.openHH.indexOf(idx) >=0){
+	        	drum.openHH.stop();
+	        	drum.openHH.start();
+	        } 	
+	        if(styleDrum.splash.indexOf(idx) >=0){
+	        	drum.splash.stop();
+	            drum.splash.start();
+	        }         
 	      	if(drum._turnTrue){
 	       		if(styleDrum.turn.start.indexOf(idx) >=0){
 	        		drum.seqTurn.start();
