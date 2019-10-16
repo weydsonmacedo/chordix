@@ -7,12 +7,28 @@ var turn = false;
 var drumJson;
 var currentDrum = 0;
 
-loadJSON(function(response) {
-  // Parse JSON string into object
-   drumJson = JSON.parse(response);
+load();
+
+function load(){
+  loadJSON(function(response) {
+    var temporario = JSON.parse(response);
+  if( JSON.stringify(drumJson) != JSON.stringify(temporario)){
+      drumJson = JSON.parse(response);
+
+      var tempSelect = $('#select_drum option:selected').val(); 
+      
+      $("#type_drum").empty();
+      for (let index = 0; index < drumJson.length; index++) {
+        var o = new Option(drumJson[index].name, index);
+        $(o).html(drumJson[index].name);
+        $("#type_drum").append(o);
+    }
+    if(tempSelect) {
+      $("#select_drum option:eq("+tempSelect+")").attr('selected','selected');
+    }
+  }      
  });
-
-
+}
 
 
 /*function structTurn(styleDrum){
@@ -72,19 +88,9 @@ function structDrum(styleDrum){
 
 */
 function selectedDrum() {
-  loadJSON(function(response) {
-         drumJson = JSON.parse(response);
-      });
    styleDrums = $('#select_drum option:selected').val();
-     
-    switch (styleDrums){
-     case 'rock':
-         currentDrum = drumJson.rock;
-        break;
-     case 'samba':
-          currentDrum = drumJson.samba;
-        break;
-     }
+   load();
+   currentDrum = drumJson[styleDrums];
      return currentDrum;
 }
 
