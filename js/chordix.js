@@ -15,6 +15,7 @@ var acoustic_notes = [e6, a5, d4, g3, b2, e1];
 
 function executeChord(shape) {
   shape = shape.split(" ");
+  bass.clear();
   bass.play(shape);
   if (!isNaN(shape[0])) {
     acoustic_notes[0].triggerAttack(Math.floor(shape[0]), "+0", 1);
@@ -39,7 +40,6 @@ function executeChord(shape) {
   if (!isNaN(shape[5])) {
     acoustic_notes[5].triggerAttack(Math.floor(shape[5]), "+0", 1);
   }
-  bass.clear();
 }
 
 

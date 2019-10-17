@@ -8,14 +8,17 @@ class Bass {
         this.g3 = new Tone.Sampler("notes/bass/2CJF-sus-hard-mi-G3.wav").toMaster();
         this.c4 = new Tone.Sampler("notes/bass/2CJF-sus-med2-mi-C4.wav").toMaster();
         this.acusticNotes = [this.e2,this.a2,this.d3,this.g3,this.c4];
+        this.soundVolume = [this.e2,this.a2,this.d3,this.g3,this.c4];
+        this.volume();
     }
     _toStructBass = function ( note) {
 		Tone.context.latencyHint = 'fastest';
 		Tone.Transport.start('+0.2');
-		// return new Tone.Sequence(function (time, idx) {
-		// 	this.acusticNotes[note[1]].triggerAttack(Math.floor(note[1]), "+0", 1);
-        // }, [0], "8n");
-        this.acusticNotes[note[1]].triggerAttack(Math.floor(note[0]), "+0", 1);
+	/*	 return new Tone.Sequence(function (time, idx) {
+		 	this.acusticNotes[note[1]].triggerAttack(Math.floor(note[1]), "+0", 1);
+         }, [0], "8n");*/
+
+        this.acusticNotes[note[1]].triggerAttackRelease(Math.floor(note[0]),"0.8", "+0", 1);
 	};
 
     play = function(shape){
@@ -29,4 +32,7 @@ class Bass {
         this.g3.triggerRelease();
         this.c4.triggerRelease();
       }
+    volume = function(){
+        this.soundVolume.forEach((x)=>{x.volume.value = -5; })
+    }
 }
