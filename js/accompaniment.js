@@ -11,8 +11,8 @@ load();
 
 function load(){
   loadJSON(function(response) {
-    var temporario = JSON.parse(response);
-  if( JSON.stringify(drumJson) != JSON.stringify(temporario)){
+    var temp = JSON.parse(response);
+  if( JSON.stringify(drumJson) != JSON.stringify(temp)){
       drumJson = JSON.parse(response);
 
       var tempSelect = $('#select_drum option:selected').val(); 

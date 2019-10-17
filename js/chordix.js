@@ -5,7 +5,7 @@ var g3 = new Tone.Sampler("notes/acoustic/G.wav").toMaster();
 var b2 = new Tone.Sampler("notes/acoustic/B.wav").toMaster();
 var e1 = new Tone.Sampler("notes/acoustic/E8.wav").toMaster();
 
-
+var bass = new Bass();
 
 var soundFix = new Tone.Sampler("notes/acoustic/E.wav").toMaster();
 soundFix.volume.value = -80;
@@ -15,7 +15,7 @@ var acoustic_notes = [e6, a5, d4, g3, b2, e1];
 
 function executeChord(shape) {
   shape = shape.split(" ");
-
+  bass.play(shape);
   if (!isNaN(shape[0])) {
     acoustic_notes[0].triggerAttack(Math.floor(shape[0]), "+0", 1);
   }
@@ -39,6 +39,7 @@ function executeChord(shape) {
   if (!isNaN(shape[5])) {
     acoustic_notes[5].triggerAttack(Math.floor(shape[5]), "+0", 1);
   }
+  bass.clear();
 }
 
 
