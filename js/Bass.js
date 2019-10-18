@@ -18,7 +18,7 @@ class Bass {
 		 	this.acusticNotes[note[1]].triggerAttack(Math.floor(note[1]), "+0", 1);
          }, [0], "8n");*/
 
-        this.acusticNotes[note[1]].triggerAttackRelease(Math.floor(note[0]),"0.8", "+0", 1);
+        this.acusticNotes[note[1]].triggerAttackRelease(Math.floor(note[0]),"0.5", "+0", 1);
 	};
 
     play = function(shape){

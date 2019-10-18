@@ -68,7 +68,7 @@
           </div>
         </li>
         <li>
-          <div id="turn" class="circle">
+          <div id="fill" class="circle">
             virada
             <div class="show-for-large-up small-text">( T )</div>
           </div>
@@ -189,8 +189,8 @@
   }
 
 
-      $("#turn").on('click', function(){
-        turns();
+      $("#fill").on('click', function(){
+        fills();
       });
 
       $("#bpm").on('change',function(){
@@ -335,7 +335,7 @@
       } 
       // key t
       if(e.keyCode == '84') {
-        turns();
+        fills();
       } 
       
     });

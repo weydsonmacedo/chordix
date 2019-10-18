@@ -11,8 +11,8 @@ class Drum {
 		this.hiTom = new Tone.Player("notes/drum/Hi-Tom-1.wav").toMaster();
 		this.lowTom = new Tone.Player("notes/drum/Low-Tom-1.wav").toMaster();
 		this.seqDrum;
-		this.seqTurn;
-		this._turnTrue;
+		this.seqFill;
+		this._fillTrue;
 	}
 
 	_toStructDrum = function (styleDrum, drum) {
@@ -43,14 +43,14 @@ class Drum {
 				drum.splash.stop();
 				drum.splash.start();
 			}
-			if (drum._turnTrue) {
-				if (styleDrum.turn.start.indexOf(idx) >= 0) {
-					drum.seqTurn.start();
+			if (drum._fillTrue) {
+				if (styleDrum.fill.start.indexOf(idx) >= 0) {
+					drum.seqFill.start();
 				}
-				if (styleDrum.turn.stop.indexOf(idx) >= 0) {
+				if (styleDrum.fill.stop.indexOf(idx) >= 0) {
 					drum.splash.start();
-					drum.seqTurn.stop();
-					drum._turnTrue = false;
+					drum.seqFill.stop();
+					drum._fillTrue = false;
 				}
 			}
 			styleDrum = drum._selectedDrum();
@@ -66,32 +66,32 @@ class Drum {
 		drum.seqDrum.stop();
 	};
 
-	_structTurn = function (styleDrum, drum) {
+	_structFill = function (styleDrum, drum) {
 		return new Tone.Sequence(function (time, idx) {
 			//hh.start()
-			if (styleDrum.turn.floorTom.indexOf(idx) >= 0) {
+			if (styleDrum.fill.floorTom.indexOf(idx) >= 0) {
 				drum.floorTom.stop();
 				drum.floorTom.start();
 			}
-			if (styleDrum.turn.snare.indexOf(idx) >= 0) {
+			if (styleDrum.fill.snare.indexOf(idx) >= 0) {
 				drum.snare.stop();
 				drum.snare.start();
 			}
-			if (styleDrum.turn.lowTom.indexOf(idx) >= 0) {
+			if (styleDrum.fill.lowTom.indexOf(idx) >= 0) {
 				drum.lowTom.stop();
 				drum.lowTom.start();
 			}
-			if (styleDrum.turn.hiTom.indexOf(idx) >= 0) {
+			if (styleDrum.fill.hiTom.indexOf(idx) >= 0) {
 				drum.hiTom.stop();
 				drum.hiTom.start();
 			}
-		}, styleDrum.turn.time, styleDrum.turn.notes);
+		}, styleDrum.fill.time, styleDrum.fill.notes);
 	};
 
-	playTurn = function (styleDrum, drum) {
-			if (!drum._turnTrue) {
-				drum.seqTurn = this._structTurn(styleDrum, drum);
-				drum._turnTrue = true;
+	playFill = function (styleDrum, drum) {
+			if (!drum._fillTrue) {
+				drum.seqFill = this._structFill(styleDrum, drum);
+				drum._fillTrue = true;
 			}
 	};
 	_selectedDrum = function () {

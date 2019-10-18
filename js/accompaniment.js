@@ -3,7 +3,7 @@ var soundDrum = new Drum();
 stop = true;
 var seq ;
 var seq2 ;
-var turn = false;
+var fill = false;
 var drumJson;
 var currentDrum = 0;
 
@@ -69,9 +69,9 @@ function playDrum(){
 
 
 
- function turns(){
-   turn = true;
-   soundDrum.playTurn(currentDrum,this.soundDrum);
+ function fills(){
+   fill = true;
+   soundDrum.playFill(currentDrum,this.soundDrum);
  }
 
  function bpm(){
