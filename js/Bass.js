@@ -10,22 +10,29 @@ class Bass {
         this.acusticNotes = [this.e2,this.a2,this.d3,this.g3,this.c4];
         this.soundVolume = [this.e2,this.a2,this.d3,this.g3,this.c4];
         this.volume();
+        this.note;
     }
-    _toStructBass = function ( note) {
+    _toStructBass = function (bass,note) {
 		Tone.context.latencyHint = 'fastest';
 		Tone.Transport.start('+0.2');
-	/*	 return new Tone.Sequence(function (time, idx) {
-		 	this.acusticNotes[note[1]].triggerAttack(Math.floor(note[1]), "+0", 1);
-         }, [0], "8n");*/
+	//	 return new Tone.Sequence(function (time, idx) {
+	//	 	bass.acusticNotes[bass.note[1]].triggerAttack(Math.floor(bass.note[0]), "+0", 1);
+      //   }, [0], "8n");
 
         this.acusticNotes[note[1]].triggerAttackRelease(Math.floor(note[0]),"0.5", "+0", 1);
+
 	};
 
-    play = function(shape){
-       var note = shape.map((x,index) => { return [x,index] }).filter(x =>{ return x[0] != 'X'})[0];
-        this._toStructBass(note);
+    play = function(shape,bass){
+        this.note = shape.map((x,index) => { return [x,index] }).filter(x =>{ return x[0] != 'X'})[0];
+        var teste = this._toStructBass(bass,this.note);
+         //   teste.start();
     }
-   clear  = function() {
+    stop = function(){
+
+    }
+   clear  = function(bass) {
+    bass.stop
         this.e2.triggerRelease();
         this.a2.triggerRelease();
         this.d3.triggerRelease();
