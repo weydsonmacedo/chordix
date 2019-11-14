@@ -54,9 +54,16 @@ class Drum {
 				}
 			}
 			styleDrum = drum._selectedDrum();
-		}, styleDrum.time, styleDrum.notes);
+		}, drum._carregarTimes(styleDrum.time), styleDrum.notes);
 	};
 
+	_carregarTimes = function(time) {
+		let array = new Array(time);
+		for (let index = 0; index < array.length; index++) {
+			array[index] = index;
+		}	
+		return array;
+	}
 	play = function (styleDrum, drum) {
 		drum.seqDrum = this._toStructDrum(styleDrum, drum);
 		drum.seqDrum.start();
@@ -85,7 +92,7 @@ class Drum {
 				drum.hiTom.stop();
 				drum.hiTom.start();
 			}
-		}, styleDrum.fill.time, styleDrum.fill.notes);
+		}, drum._carregarTimes(styleDrum.fill.time), styleDrum.fill.notes);
 	};
 
 	playFill = function (styleDrum, drum) {
