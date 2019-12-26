@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta charset="utf-8">
+
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/foundation4.css" rel="stylesheet"/>
+
+
+    <script type='text/javascript' src='js/Tone.js'></script>
+    <script type='text/javascript' src='js/jquery-3.1.0.min.js'></script>
+
+    <title>Chordix</title>
+  </head>
+  <body>
+    <button id="button">Clique</button>
+    <button id="stop">Stop</button>
+    <button id="troca">Trocar acorde</button>
+    <script>
+
+  Tone.Transport.bpm.value = 100;
+
+  let e6 = new Tone.Sampler("notes/acoustic/E.wav").toMaster();
+  let a5 = new Tone.Sampler("notes/acoustic/A.wav").toMaster();
+  let bumbo = new Tone.Sampler("https://cdn.jsdelivr.net/gh/Tonejs/Tone.js/examples/audio/505/kick.mp3").toMaster();
+  let caixa = new Tone.Sampler("notes/drum/Korg-TR-Rack-Standard-Kit-Snare-Drum.wav").toMaster();
+  let hihat = new Tone.Sampler("notes/drum/Closed-Hi-Hat-1.wav").toMaster();
+
+
+  let acorde = 0;
+
+  // -1 = silêncio
+  // 0 = sample sem transposição
+  // > 0 = semitons para transpor
+  let melodia = [
+    {baixo: 0, bumbo: -1, caixa: -1, hihat: -1},
+    {baixo: 7, bumbo: -1, caixa: -1, hihat:  0},
+    {baixo: 0, bumbo: -1, caixa:  0, hihat: -1},
+    {baixo: 7, bumbo: -1, caixa: -1, hihat:  0},
+  ]
+
+  $('#button').on('click', () => {
+    console.log('click');
+
+    let sequence = new Tone.Sequence(function (time, idx) {
+      console.log(idx);
+      if (idx.baixo != -1) {
+        e6.triggerAttack(acorde + idx.baixo, "+0", 1);
+      }
+      if (idx.bumbo != -1) {
+        bumbo.triggerAttack(0, "+0", 1)
+      }
+      if (idx.caixa != -1) {
+        caixa.triggerAttack(0, "+0", 1)
+      }
+      if (idx.hihat != -1) {
+        hihat.triggerAttack(0, "+0", 1)
+      }
+    }, melodia, "4n");
+    sequence.start();
+
+    Tone.Transport.start();
+  });
+
+  $('#stop').on('click', () => Tone.Transport.stop());
+  $('#troca').on('click', () => {
+    acorde = acorde == 0 ? 5 : 0;
+  });
+    
+    </script>
+  </body>
+</html>
