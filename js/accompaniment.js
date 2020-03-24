@@ -60,6 +60,8 @@ function playDrum(){
     }else{
       stop = false;
       bpm();
+      console.log(currentDrum)
+      console.log(this.soundDrum)
        soundDrum.play(currentDrum,this.soundDrum);
     }
 

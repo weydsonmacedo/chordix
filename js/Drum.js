@@ -1,15 +1,15 @@
 
 class Drum {
 	constructor() {
-		this.kick = new Tone.Player("https://cdn.jsdelivr.net/gh/Tonejs/Tone.js/examples/audio/505/kick.mp3").toMaster();
-		this.snare = new Tone.Player("notes/drum/Korg-TR-Rack-Standard-Kit-Snare-Drum.wav").toMaster();
-		this.snareRim = new Tone.Player("notes/drum/Korg-TR-Rack-Standard-Kit-Side-Stick.wav").toMaster();
-		this.hh = new Tone.Player("notes/drum/Closed-Hi-Hat-1.wav").toMaster();
-		this.openHH = new Tone.Player("notes/drum/hihat_004b.wav").toMaster();
-		this.splash = new Tone.Player("notes/drum/Kawai-K11-Bob-Splash-Cymbal.wav").toMaster();
-		this.floorTom = new Tone.Player("notes/drum/Floor-Tom-1.wav").toMaster();
-		this.hiTom = new Tone.Player("notes/drum/Hi-Tom-1.wav").toMaster();
-		this.lowTom = new Tone.Player("notes/drum/Low-Tom-1.wav").toMaster();
+		this.kick = new Tone.Sampler("https://cdn.jsdelivr.net/gh/Tonejs/Tone.js/examples/audio/505/kick.mp3").toMaster();
+		this.snare = new Tone.Sampler("notes/drum/Korg-TR-Rack-Standard-Kit-Snare-Drum.wav").toMaster();
+		this.snareRim = new Tone.Sampler("notes/drum/Korg-TR-Rack-Standard-Kit-Side-Stick.wav").toMaster();
+		this.hh = new Tone.Sampler("notes/drum/Closed-Hi-Hat-1.wav").toMaster();
+		this.openHH = new Tone.Sampler("notes/drum/hihat_004b.wav").toMaster();
+		this.splash = new Tone.Sampler("notes/drum/Kawai-K11-Bob-Splash-Cymbal.wav").toMaster();
+		this.floorTom = new Tone.Sampler("notes/drum/Floor-Tom-1.wav").toMaster();
+		this.hiTom = new Tone.Sampler("notes/drum/Hi-Tom-1.wav").toMaster();
+		this.lowTom = new Tone.Sampler("notes/drum/Low-Tom-1.wav").toMaster();
 		this.seqDrum;
 		this.seqFill;
 		this._fillTrue;
@@ -19,51 +19,43 @@ class Drum {
 		Tone.context.latencyHint = 'fastest';
 		Tone.Transport.start('+0.2');
 		return new Tone.Sequence(function (time, idx) {
-			if (styleDrum.closedHH.indexOf(idx) >= 0) {
-				drum.hh.stop();
-				drum.hh.start();
-			}
-			if (styleDrum.kick.indexOf(idx) >= 0) {
-				drum.kick.stop();
-				drum.kick.start();
-			}
-			if (styleDrum.snare.indexOf(idx) >= 0) {
-				drum.snare.stop();
-				drum.snare.start();
-			}
-			if (styleDrum.snareRim.indexOf(idx) >= 0) {
-				drum.snareRim.stop();
-				drum.snareRim.start();
-			}
-			if (styleDrum.openHH.indexOf(idx) >= 0) {
-				drum.openHH.stop();
-				drum.openHH.start();
-			}
-			if (styleDrum.splash.indexOf(idx) >= 0) {
-				drum.splash.stop();
-				drum.splash.start();
-			}
-			if (drum._fillTrue) {
-				if (styleDrum.fill.start.indexOf(idx) >= 0) {
-					drum.seqFill.start();
-				}
-				if (styleDrum.fill.stop.indexOf(idx) >= 0) {
-					drum.splash.start();
-					drum.seqFill.stop();
-					drum._fillTrue = false;
-				}
-			}
+
+			if (idx.kick != -1) {
+				drum.kick.triggerAttack(0, "+0", 1)
+			  }
+			  if (idx.snare != -1) {
+				drum.snare.triggerAttack(0, "+0", 1)
+			  }
+			  if (idx.openHH != -1) {
+				drum.openHH.triggerAttack(0, "+0", 1)
+			  }
+			  if (idx.closedHH != -1) {
+				drum.hh.triggerAttack(0, "+0", 1)
+			  }
+
+
+			
+			// if (drum._fillTrue) {
+			// 	if (styleDrum.fill.start.indexOf(idx) >= 0) {
+			// 		drum.seqFill.start();
+			// 	}
+			// 	if (styleDrum.fill.stop.indexOf(idx) >= 0) {
+			// 		drum.splash.start();
+			// 		drum.seqFill.stop();
+			// 		drum._fillTrue = false;
+			// 	}
+			// }
 			styleDrum = drum._selectedDrum();
-		}, drum._carregarTimes(styleDrum.time), styleDrum.notes);
+		}, styleDrum.melody, styleDrum.notes);
 	};
 
-	_carregarTimes = function(time) {
-		let array = new Array(time);
-		for (let index = 0; index < array.length; index++) {
-			array[index] = index;
-		}	
-		return array;
-	}
+	// _carregarMelody = function(styleDrum) {
+	// 	let array = new Array(time);
+	// 	for (let index = 0; index < array.length; index++) {
+	// 		array[index] = index;
+	// 	}	
+	// 	return array;
+	// }
 	play = function (styleDrum, drum) {
 		drum.seqDrum = this._toStructDrum(styleDrum, drum);
 		drum.seqDrum.start();
@@ -95,12 +87,12 @@ class Drum {
 		}, drum._carregarTimes(styleDrum.fill.time), styleDrum.fill.notes);
 	};
 
-	playFill = function (styleDrum, drum) {
-			if (!drum._fillTrue) {
-				drum.seqFill = this._structFill(styleDrum, drum);
-				drum._fillTrue = true;
-			}
-	};
+	// playFill = function (styleDrum, drum) {
+	// 		if (!drum._fillTrue) {
+	// 			drum.seqFill = this._structFill(styleDrum, drum);
+	// 			drum._fillTrue = true;
+	// 		}
+	// };
 	_selectedDrum = function () {
 			return selectedDrum();
 	};		
