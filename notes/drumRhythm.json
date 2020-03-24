@@ -4,11 +4,11 @@
 	"melody":[
 			{"bass": 0, "kick":  0, "snare": -1, "openHH":  -1, "closedHH":  0},
 			{"bass":-1, "kick": -1, "snare": -1, "openHH":   0, "closedHH": -1},
-			{"bass":-1, "kick": -1, "snare":  0, "openHH":  -1, "closedHH":  0},
+			{"bass": 5, "kick": -1, "snare":  0, "openHH":  -1, "closedHH":  0},
 			{"bass":-1, "kick": -1, "snare": -1, "openHH":   0, "closedHH": -1},
 			{"bass": 7, "kick":  0, "snare": -1, "openHH":  -1, "closedHH":  0},
 			{"bass":-1, "kick": -1, "snare": -1, "openHH":   0, "closedHH": -1},
-			{"bass":-1, "kick": -1, "snare":  0, "openHH":  -1, "closedHH":  0},
+			{"bass": 0, "kick": -1, "snare":  0, "openHH":  -1, "closedHH":  0},
 			{"bass":-1, "kick":  0, "snare": -1, "openHH":  -1, "closedHH":  0}
 		  ],
 	"time":4,
