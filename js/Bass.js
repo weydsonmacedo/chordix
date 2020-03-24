@@ -12,27 +12,36 @@ class Bass {
         this.volume();
         this.note;
         this.seq;
+        this.melody;
+        this.noteTime;
     }
     _toStructBass = function (bass,note) {
 		Tone.context.latencyHint = 'fastest';
 		Tone.Transport.start('+0.2');
 		 return new Tone.Sequence(function (time, idx) {
-             if([0,3,8,11,16,19,24,27].indexOf(idx) >= 0) {
+
+            if (idx.bass != -1) {
+                bass.acusticNotes[bass.note[1]].triggerAttack(idx.bass, "+0", 1);
+              }
+            //  if([0,3,8,11,16,19,24,27].indexOf(idx) >= 0) {
                 
-                 bass.acusticNotes[bass.note[1]].triggerAttackRelease(Math.floor(bass.note[0]+4),"0.2", "+0", 1);
-             }
-             if([4,6,12,14,20,22,28,30].indexOf(idx) >= 0) {
+            //      bass.acusticNotes[bass.note[1]].triggerAttackRelease(Math.floor(bass.note[0]+4),"0.2", "+0", 1);
+            //  }
+            //  if([4,6,12,14,20,22,28,30].indexOf(idx) >= 0) {
                 
-                bass.acusticNotes[bass.note[1]].triggerAttackRelease(Math.floor(bass.note[0]),"0.1", "+0", 1);
-            }
+            //     bass.acusticNotes[bass.note[1]].triggerAttackRelease(Math.floor(bass.note[0]),"0.1", "+0", 1);
+            // }
              // 0 : tonica / 4: terça maior / 3: terça menor / 7: quinta maior/menor  / diminuta 6/ 
-        }, [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31], "16n");
+
+        }, bass.melody, bass.noteTime);
 
      //   this.acusticNotes[note[1]].triggerAttackRelease(Math.floor(note[0]),"0.5", "+0", 1);
 
 	};
 
     play = function(shape,bass){
+        bass.melody = selectedDrum().melody;
+        bass.noteTime = selectedDrum().notes;
         this.note = shape.map((x,index) => { return [x,index] }).filter(x =>{ return x[0] != 'X'})[0];
         this.seq = this._toStructBass(bass,this.note);
         this.seq.start();
