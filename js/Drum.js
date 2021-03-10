@@ -35,16 +35,16 @@ class Drum {
 
 
 			
-			// if (drum._fillTrue) {
-			// 	if (styleDrum.fill.start.indexOf(idx) >= 0) {
-			// 		drum.seqFill.start();
-			// 	}
-			// 	if (styleDrum.fill.stop.indexOf(idx) >= 0) {
-			// 		drum.splash.start();
-			// 		drum.seqFill.stop();
-			// 		drum._fillTrue = false;
-			// 	}
-			// }
+			if (drum._fillTrue) {
+				if (styleDrum.fill.start.indexOf(idx) >= 0) {
+					drum.seqFill.start();
+				}
+				if (styleDrum.fill.stop.indexOf(idx) >= 0) {
+					drum.splash.start();
+					drum.seqFill.stop();
+					drum._fillTrue = false;
+				}
+			}
 			styleDrum = drum._selectedDrum();
 		}, styleDrum.melody, styleDrum.notes);
 	};
@@ -85,14 +85,14 @@ class Drum {
 				drum.hiTom.start();
 			}
 		}, drum._carregarTimes(styleDrum.fill.time), styleDrum.fill.notes);
-	};
+	}; 
 
-	// playFill = function (styleDrum, drum) {
-	// 		if (!drum._fillTrue) {
-	// 			drum.seqFill = this._structFill(styleDrum, drum);
-	// 			drum._fillTrue = true;
-	// 		}
-	// };
+	playFill = function (styleDrum, drum) {
+			if (!drum._fillTrue) {
+				drum.seqFill = this._structFill(styleDrum, drum);
+				drum._fillTrue = true;
+			}
+	};
 	_selectedDrum = function () {
 			return selectedDrum();
 	};		

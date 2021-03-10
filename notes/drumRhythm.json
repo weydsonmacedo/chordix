@@ -12,7 +12,21 @@
 			{"bass":-1, "kick":  0, "snare": -1, "openHH":  -1, "closedHH":  0}
 		  ],
 	"time":4,
-	"notes":"8n"
+	"notes":"8n",
+	"fill":{
+		"melody": [
+			{"bass": 0, "floorTom":  0, "snare": -1, "openHH":  -1, "closedHH": -1},
+			{"bass":-1, "floorTom": -1, "snare":  0, "openHH":  -1, "closedHH": -1},
+			{"bass": 5, "floorTom": -1, "snare":  0, "openHH":  -1, "closedHH": -1},
+			{"bass":-1, "floorTom":  0, "snare": -1, "openHH":  -1, "closedHH": -1},
+			{"bass": 7, "floorTom":  0, "snare": -1, "openHH":  -1, "closedHH": -1},
+			{"bass":-1, "floorTom": -1, "snare": -1, "openHH":  -1, "closedHH": -1},
+			{"bass": 0, "floorTom": -1, "snare": -1, "openHH":  -1, "closedHH": -1},
+			{"bass":-1, "floorTom": -1, "snare": -1, "openHH":  -1, "closedHH": -1}
+		],
+		"time":4,
+		"notes":"16n"
+		}
 	},
 	{	
 		"name":"Rock",

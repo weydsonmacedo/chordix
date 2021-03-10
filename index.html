@@ -105,7 +105,7 @@
       var container;
       var n = 0;
       var play_pause = true;
-
+      var itemPre = '';
       $(document).ready(function(){
         $('#select_drum').hide();
          $('#bpm').hide();
@@ -114,25 +114,27 @@
 
       var showChord = function(id) {
         container = $(".cipher");
-
-        $(container).animate({
-          scrollTop:$("#"+id).offset().top - container.offset().top + container.scrollTop()
-        }, 280);
-
-        $("#"+id).addClass('active');
-        playChord($("#"+id)[0].firstChild.data);
+        itemPre = $('pre')[0].children;
+        if(itemPre.item(id) != null) {
+          $(container).animate({
+            scrollTop:itemPre.item(id).offsetTop
+          }, 280);
+          itemPre.item(id).setAttribute('class','active');
+          playChord(itemPre.item(id).firstChild.data);
+        }
       }
 
       var hideChord = function(id) {
-        $("#"+id).removeClass('active');
+          if(id >= 0 && itemPre.item(id) != null)
+            itemPre.item(id).removeAttribute('class');
       }
 
       var playChord = function(chord) {
         var flag = true;
         var i = 0;
         while (flag) {
-          if (parsedChords[i].chord == chord) {
-            executeChord(parsedChords[i].guitar[0]);
+          if (parsedChords[i].name == chord) {
+            executeChord(parsedChords[i].shapeList[0].shapeTunings[0].shapes[0]);
             flag = false;
           }
           i++;
