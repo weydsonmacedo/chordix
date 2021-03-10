@@ -19,7 +19,7 @@ class Drum {
 		Tone.context.latencyHint = 'fastest';
 		Tone.Transport.start('+0.2');
 		return new Tone.Sequence(function (time, idx) {
-
+			
 			if (idx.kick != -1) {
 				drum.kick.triggerAttack(0, "+0", 1)
 			  }
@@ -33,29 +33,22 @@ class Drum {
 				drum.hh.triggerAttack(0, "+0", 1)
 			  }
 
-
-			
-			if (drum._fillTrue) {
-				if (styleDrum.fill.start.indexOf(idx) >= 0) {
+			if (drum._fillTrue && idx.startFill != -1) {
 					drum.seqFill.start();
-				}
-				if (styleDrum.fill.stop.indexOf(idx) >= 0) {
-					drum.splash.start();
-					drum.seqFill.stop();
-					drum._fillTrue = false;
-				}
+			} 
+			
+			if(idx.stopFill != -1 && drum._fillTrue) {
+				drum.splash.triggerAttack(0, "+0", 1)
+				drum.seqFill.stop();
+				drum._fillTrue = false;
 			}
+			
+
+
 			styleDrum = drum._selectedDrum();
 		}, styleDrum.melody, styleDrum.notes);
 	};
 
-	// _carregarMelody = function(styleDrum) {
-	// 	let array = new Array(time);
-	// 	for (let index = 0; index < array.length; index++) {
-	// 		array[index] = index;
-	// 	}	
-	// 	return array;
-	// }
 	play = function (styleDrum, drum) {
 		drum.seqDrum = this._toStructDrum(styleDrum, drum);
 		drum.seqDrum.start();
@@ -67,24 +60,20 @@ class Drum {
 
 	_structFill = function (styleDrum, drum) {
 		return new Tone.Sequence(function (time, idx) {
-			//hh.start()
-			if (styleDrum.fill.floorTom.indexOf(idx) >= 0) {
-				drum.floorTom.stop();
-				drum.floorTom.start();
-			}
-			if (styleDrum.fill.snare.indexOf(idx) >= 0) {
-				drum.snare.stop();
-				drum.snare.start();
-			}
-			if (styleDrum.fill.lowTom.indexOf(idx) >= 0) {
-				drum.lowTom.stop();
-				drum.lowTom.start();
-			}
-			if (styleDrum.fill.hiTom.indexOf(idx) >= 0) {
-				drum.hiTom.stop();
-				drum.hiTom.start();
-			}
-		}, drum._carregarTimes(styleDrum.fill.time), styleDrum.fill.notes);
+
+			if (idx.floorTom != -1) {
+				drum.floorTom.triggerAttack(0, "+0", 1)
+			  }
+			  if (idx.snare != -1) {
+				drum.snare.triggerAttack(0, "+0", 1)
+			  }
+			  if (idx.openHH != -1) {
+				drum.openHH.triggerAttack(0, "+0", 1)
+			  }
+			  if (idx.closedHH != -1) {
+				drum.hh.triggerAttack(0, "+0", 1)
+			  }
+		}, styleDrum.fill.melody, styleDrum.fill.notes);
 	}; 
 
 	playFill = function (styleDrum, drum) {
