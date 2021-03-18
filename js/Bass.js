@@ -18,24 +18,26 @@ class Bass {
     _toStructBass = function (bass,note) {
 		Tone.context.latencyHint = 'fastest';
 		Tone.Transport.start('+0.2');
-		//  return new Tone.Sequence(function (time, idx) {
+		 return new Tone.Sequence(function (time, idx) {
 
-        //     if (idx.bass != -1) {
-        //         bass.acusticNotes[bass.note[1]].triggerAttack(idx.bass, "+0", 1);
-        //       }
-        //     //  if([0,3,8,11,16,19,24,27].indexOf(idx) >= 0) {
+            if (idx.bass != -1) {
+                bass.acusticNotes[bass.note[1]].triggerAttackRelease(idx.bass, "+0", 0.5);
+              }
+              //bass.acusticNotes[bass.note[1]].triggerRelease();
+
+            //  if([0,3,8,11,16,19,24,27].indexOf(idx) >= 0) {
                 
-        //     //      bass.acusticNotes[bass.note[1]].triggerAttackRelease(Math.floor(bass.note[0]+4),"0.2", "+0", 1);
-        //     //  }
-        //     //  if([4,6,12,14,20,22,28,30].indexOf(idx) >= 0) {
+            //      bass.acusticNotes[bass.note[1]].triggerAttackRelease(Math.floor(bass.note[0]+4),"0.2", "+0", 1);
+            //  }
+            //  if([4,6,12,14,20,22,28,30].indexOf(idx) >= 0) {
                 
-        //     //     bass.acusticNotes[bass.note[1]].triggerAttackRelease(Math.floor(bass.note[0]),"0.1", "+0", 1);
-        //     // }
-        //      // 0 : tonica / 4: terça maior / 3: terça menor / 7: quinta maior/menor  / diminuta 6/ 
+            //     bass.acusticNotes[bass.note[1]].triggerAttackRelease(Math.floor(bass.note[0]),"0.1", "+0", 1);
+            // }
+             // 0 : tonica / 4: terça maior / 3: terça menor / 7: quinta maior/menor  / diminuta 6/ 
 
-        // }, bass.melody, bass.noteTime);
+        }, bass.melody, bass.noteTime);
 
-       this.acusticNotes[note[1]].triggerAttackRelease(Math.floor(note[0]),"0.5", "+0", 1);
+      // this.acusticNotes[note[1]].triggerAttackRelease(Math.floor(note[0]),"0.5", "+0", 1);
 
 	};
 
@@ -44,7 +46,7 @@ class Bass {
         bass.noteTime = selectedDrum().notes;
         this.note = shape.map((x,index) => { return [x,index] }).filter(x =>{ return x[0] != 'X'})[0];
         this.seq = this._toStructBass(bass,this.note);
-        //this.seq.start();
+        this.seq.start();
     }
     stop = function(){
         if(this.seq)

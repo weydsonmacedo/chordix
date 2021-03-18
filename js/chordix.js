@@ -10,9 +10,9 @@ var bass = new Bass();
 var soundFix = new Tone.Sampler("notes/acoustic/E.wav").toMaster();
 soundFix.volume.value = -80;
 var list_chords = null;
-
 var acoustic_notes = [e6, a5, d4, g3, b2, e1];
-
+var start = false;
+var played;
 function executeChord(shape) {
   shape = shape.split(" ");
   bass.clear(bass);
@@ -21,24 +21,33 @@ function executeChord(shape) {
     acoustic_notes[0].triggerAttack(Math.floor(shape[0]), "+0", 1);
   }
 
-  if (!isNaN(shape[1])) {
-    acoustic_notes[1].triggerAttack(Math.floor(shape[1]), "+0", 1);
-  }
+  // if (!isNaN(shape[1])) {
+  //   acoustic_notes[1].triggerAttack(Math.floor(shape[1]), "+0", 1);
+  // }
 
-  if (!isNaN(shape[2])) {
-    acoustic_notes[2].triggerAttack(Math.floor(shape[2]), "+0", 1);
-  }
+  // if (!isNaN(shape[2])) {
+  //   acoustic_notes[2].triggerAttack(Math.floor(shape[2]), "+0", 1);
+  // }
 
-  if (!isNaN(shape[3])) {
-    acoustic_notes[3].triggerAttack(Math.floor(shape[3]), "+0", 1);
-  }
+  // if (!isNaN(shape[3])) {
+  //   acoustic_notes[3].triggerAttack(Math.floor(shape[3]), "+0", 1);
+  // }
 
-  if (!isNaN(shape[4])) {
-    acoustic_notes[4].triggerAttack(Math.floor(shape[4]), "+0", 1);
-  }
+  // if (!isNaN(shape[4])) {
+  //   acoustic_notes[4].triggerAttack(Math.floor(shape[4]), "+0", 1);
+  // }
 
-  if (!isNaN(shape[5])) {
-    acoustic_notes[5].triggerAttack(Math.floor(shape[5]), "+0", 1);
+  // if (!isNaN(shape[5])) {
+  //   acoustic_notes[5].triggerAttack(Math.floor(shape[5]), "+0", 1);
+  // }
+  if(start) {
+    played.stop();
+    start = false;
+  } 
+  if (!start) {
+    played = teste(shape);
+    played.start();
+    start = true;
   }
 }
 
@@ -112,4 +121,35 @@ function mapChord(list_chord) {
       playChord($(this).data("chord").split(" "));
     });
   }
+}
+
+function teste(shape) {
+ return new Tone.Sequence(function (time, idx) {
+
+      if (!isNaN(shape[0])) {
+        acoustic_notes[0].triggerAttack(Math.floor(shape[0]), "+0", 0.5);
+      }
+    
+      if (!isNaN(shape[1])) {
+        acoustic_notes[1].triggerAttack(Math.floor(shape[1]), "+0", 0.5);
+      }
+    
+      if (!isNaN(shape[2])) {
+        acoustic_notes[2].triggerAttack(Math.floor(shape[2]), "+0",0.5);
+      }
+    
+      if (!isNaN(shape[3])) {
+        acoustic_notes[3].triggerAttack(Math.floor(shape[3]), "+0", 0.5);
+      }
+    
+      if (!isNaN(shape[4])) {
+        acoustic_notes[4].triggerAttack(Math.floor(shape[4]), "+0", 0.5);
+      }
+    
+      if (!isNaN(shape[5])) {
+        acoustic_notes[5].triggerAttack(Math.floor(shape[5]), "+0", 0.5);
+      }
+      
+  
+  }, selectedDrum().melody, selectedDrum().notes);
 }

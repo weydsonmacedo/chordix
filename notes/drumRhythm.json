@@ -4,12 +4,12 @@
 	"melody":[
 			{"bass": 0, "kick":  0, "snare": -1, "openHH":  -1, "closedHH":  0, "startFill":-1, "stopFill":0},
 			{"bass":-1, "kick": -1, "snare": -1, "openHH":   0, "closedHH": -1, "startFill":-1, "stopFill":-1},
-			{"bass": 5, "kick": -1, "snare":  0, "openHH":  -1, "closedHH":  0, "startFill":-1, "stopFill":-1},
+			{"bass":-1, "kick": -1, "snare":  0, "openHH":  -1, "closedHH":  0, "startFill":-1, "stopFill":-1},
 			{"bass":-1, "kick": -1, "snare": -1, "openHH":   0, "closedHH": -1, "startFill":-1, "stopFill":-1},
-			{"bass": 7, "kick":  0, "snare": -1, "openHH":  -1, "closedHH":  0, "startFill":-1, "stopFill":-1},
+			{"bass": 0, "kick":  0, "snare": -1, "openHH":  -1, "closedHH":  0, "startFill":-1, "stopFill":-1},
 			{"bass":-1, "kick": -1, "snare": -1, "openHH":   0, "closedHH": -1, "startFill": 0, "stopFill":-1},
-			{"bass": 0, "kick": -1, "snare":  0, "openHH":  -1, "closedHH":  0, "startFill":-1, "stopFill":-1},
-			{"bass":-1, "kick":  0, "snare": -1, "openHH":  -1, "closedHH":  0, "startFill":-1, "stopFill":-1}
+			{"bass":-1, "kick": -1, "snare":  0, "openHH":  -1, "closedHH":  0, "startFill":-1, "stopFill":-1},
+			{"bass": 0, "kick":  0, "snare": -1, "openHH":  -1, "closedHH":  0, "startFill":-1, "stopFill":-1}
 		  ],
 	"time":4,
 	"notes":"8n",
@@ -17,7 +17,7 @@
 		"melody": [
 			{"bass": 0, "floorTom":  0, "snare": -1, "openHH":  -1, "closedHH": -1},
 			{"bass":-1, "floorTom": -1, "snare":  0, "openHH":  -1, "closedHH": -1},
-			{"bass": 5, "floorTom": -1, "snare":  0, "openHH":  -1, "closedHH": -1},
+			{"bass":-1, "floorTom": -1, "snare":  0, "openHH":  -1, "closedHH": -1},
 			{"bass":-1, "floorTom":  0, "snare": -1, "openHH":  -1, "closedHH": -1},
 			{"bass": 7, "floorTom":  0, "snare": -1, "openHH":  -1, "closedHH": -1},
 			{"bass":-1, "floorTom": -1, "snare": -1, "openHH":  -1, "closedHH": -1},
