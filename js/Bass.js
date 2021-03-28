@@ -14,6 +14,7 @@ class Bass {
         this.seq;
         this.melody;
         this.noteTime;
+        this.lastShape;
     }
     _toStructBass = function (bass,note) {
 		Tone.context.latencyHint = 'fastest';
@@ -41,26 +42,35 @@ class Bass {
 
 	};
 
-    play = function(shape,bass){
+    play = (shape,bass) =>{
+      if (this.equals(this.lastShape, shape)) {
+        return ;
+      }
+        this.lastShape = shape;
+        clear(bass,shape);
         bass.melody = selectedDrum().melody;
         bass.noteTime = selectedDrum().notes;
         this.note = shape.map((x,index) => { return [x,index] }).filter(x =>{ return x[0] != 'X'})[0];
         this.seq = this._toStructBass(bass,this.note);
         this.seq.start();
     }
-    stop = function(){
+    stop = () => {
         if(this.seq)
             this.seq.stop();
     }
-   clear  = function(bass) {
-        bass.stop();
-        this.e2.triggerRelease();
-        this.a2.triggerRelease();
-        this.d3.triggerRelease();
-        this.g3.triggerRelease();
-        this.c4.triggerRelease();
-      }
-    volume = function(){
+  clear =  (bass) => {
+      bass.stop();
+      this.e2.triggerRelease();
+      this.a2.triggerRelease();
+      this.d3.triggerRelease();
+      this.g3.triggerRelease();
+      this.c4.triggerRelease();
+  }
+    volume = () =>{
         this.soundVolume.forEach((x)=>{x.volume.value = -5; })
     }
+
+  equals = (a, b) =>
+    a != undefined && b != undefined  && a.length === b.length &&
+    a.every((v, i) => v === b[i]);
 }
